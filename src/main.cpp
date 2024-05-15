@@ -1,14 +1,14 @@
 #include <Arduino.h>
 #include "SPI.h"
 #include <Adafruit_PWMServoDriver.h>
-#include <stdlib.h>
+#include <stdlib.h> // Include standard library for random
 
 Adafruit_PWMServoDriver driver0 = Adafruit_PWMServoDriver(0x40);
 Adafruit_PWMServoDriver driver1 = Adafruit_PWMServoDriver(0x41);
 
 struct left_eye_up_down {
     const uint8_t driver_num = 0;
-    const uint8_t comp = 2;
+    const uint8_t comp = 0;
     const uint16_t up_most = 1250;
     const uint16_t center = 1450;
     const uint16_t down_most = 1650;
@@ -17,7 +17,7 @@ struct left_eye_up_down {
 
 struct right_eye_up_down {
     const uint8_t driver_num = 0;
-    const uint8_t comp = 1;
+    const uint8_t comp = 2;
     const uint16_t up_most = 1650;
     const uint16_t center = 1450;
     const uint16_t down_most = 1250;
@@ -26,7 +26,7 @@ struct right_eye_up_down {
 
 struct left_eye_left_right {
     const uint8_t driver_num = 0;
-    const uint8_t comp = 3;
+    const uint8_t comp = 1;
     const uint16_t right_most = 1240;
     const uint16_t center = 1400;
     const uint16_t left_most = 1540;
@@ -35,7 +35,7 @@ struct left_eye_left_right {
 
 struct right_eye_left_right {
     const uint8_t driver_num = 0;
-    const uint8_t comp = 0;
+    const uint8_t comp = 3;
     const uint16_t right_most = 1540;
     const uint16_t center = 1400;
     const uint16_t left_most = 1240;
@@ -247,6 +247,19 @@ void moveEyesSteep(uint16_t leftEyeTargetUpDown, uint16_t leftEyeTargetLeftRight
     }
 }
 
+// Expression function to move both eyes steeply
+void moveBothEyesSteepExpression()
+{
+    // Generate random positions for the eyes
+    uint16_t leftEyeTargetUpDown = random(left_eye_up_down.up_most, left_eye_up_down.down_most);
+    uint16_t leftEyeTargetLeftRight = random(left_eye_left_right.right_most, left_eye_left_right.left_most);
+    uint16_t rightEyeTargetUpDown = random(right_eye_up_down.down_most, right_eye_up_down.up_most);
+    uint16_t rightEyeTargetLeftRight = random(right_eye_left_right.right_most, right_eye_left_right.left_most);
+
+    // Move eyes to random positions in a steep direction
+    moveEyesSteep(leftEyeTargetUpDown, leftEyeTargetLeftRight, rightEyeTargetUpDown, rightEyeTargetLeftRight, 5, 10);
+}
+
 void moveBothEyesUpDownSync(uint16_t target, uint16_t delay_ms, uint16_t stepSize)
 {
     Serial.println("moving");
@@ -346,6 +359,10 @@ void moveBothKouteksToFrownMax(uint16_t delay_ms, uint16_t stepSize)
     moveByMs(rightKoutek.top_comp, rightKoutek.top_part_smile_max, rightKoutek.driver_num);
 }
 
+void (*expressions[])() = {
+        moveBothEyesSteepExpression
+};
+
 void setup()
 {
     Serial.begin(115200);
@@ -365,20 +382,10 @@ void setup()
     moveByMs(rightKoutek.top_comp, rightKoutek.top_comp_pos, rightKoutek.driver_num);
 }
 
-void moveBothEyesSteepExpression(){
-    uint16_t leftEyeTargetUpDown = random(left_eye_up_down.up_most, left_eye_up_down.down_most);
-    uint16_t leftEyeTargetLeftRight = random(left_eye_left_right.right_most, left_eye_left_right.left_most);
-    uint16_t rightEyeTargetUpDown = random(right_eye_up_down.down_most, right_eye_up_down.up_most);
-    uint16_t rightEyeTargetLeftRight = random(right_eye_left_right.right_most, right_eye_left_right.left_most);
-
-    // Move eyes to random positions in a steep direction
-    moveEyesSteep(leftEyeTargetUpDown, leftEyeTargetLeftRight, rightEyeTargetUpDown, rightEyeTargetLeftRight, 1, 10);
-}
-
 void loop()
 {
-    // Generate random positions for the eyes
+    long randomIndex = random(0, sizeof(expressions) / sizeof(expressions[0]));
+    expressions[randomIndex]();
 
-    moveBothEyesSteepExpression();
-    delay(2000); // Wait for 2 seconds before the next movement
+    delay(random(5000, 10000));
 }
