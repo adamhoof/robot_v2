@@ -1,50 +1,46 @@
 #include <Arduino.h>
 #include "SPI.h"
 #include <Adafruit_PWMServoDriver.h>
+#include <stdlib.h>
 
 Adafruit_PWMServoDriver driver0 = Adafruit_PWMServoDriver(0x40);
 Adafruit_PWMServoDriver driver1 = Adafruit_PWMServoDriver(0x41);
 
-
 struct left_eye_up_down {
     const uint8_t driver_num = 0;
-    const uint8_t comp = 0;
+    const uint8_t comp = 2;
     const uint16_t up_most = 1250;
     const uint16_t center = 1450;
     const uint16_t down_most = 1650;
     uint16_t pos = center;
 };
 
-
 struct right_eye_up_down {
     const uint8_t driver_num = 0;
-    const uint8_t comp = 2;
+    const uint8_t comp = 1;
     const uint16_t up_most = 1650;
     const uint16_t center = 1450;
     const uint16_t down_most = 1250;
     uint16_t pos = center;
 };
 
-
 struct left_eye_left_right {
     const uint8_t driver_num = 0;
-    const uint8_t comp = 1;
+    const uint8_t comp = 3;
     const uint16_t right_most = 1240;
     const uint16_t center = 1400;
     const uint16_t left_most = 1540;
-    const uint16_t pos = center;
+    uint16_t pos = center;
 };
-
 
 struct right_eye_left_right {
     const uint8_t driver_num = 0;
-    const uint8_t comp = 3;
+    const uint8_t comp = 0;
     const uint16_t right_most = 1540;
     const uint16_t center = 1400;
     const uint16_t left_most = 1240;
-    const uint16_t pos = center;
+    uint16_t pos = center;
 };
-
 
 struct both_eyes_up_down {
 private :
@@ -55,7 +51,6 @@ public:
     const uint16_t center = 1450;
     const uint16_t down_most = 1250;
 };
-
 
 struct left_koutek {
     const uint8_t driver_num = 0;
@@ -70,7 +65,6 @@ struct left_koutek {
     uint16_t top_comp_pos = top_part_center;
 };
 
-
 struct right_koutek {
     const uint8_t driver_num = 0;
     const uint8_t bottom_comp = 6;
@@ -83,7 +77,6 @@ struct right_koutek {
     uint16_t top_part_center = 1450;
     uint16_t top_comp_pos = top_part_center;
 };
-
 
 left_eye_up_down left_eye_up_down;
 right_eye_up_down right_eye_up_down;
@@ -150,11 +143,110 @@ void moveRightEyeUpDown(uint16_t target, uint16_t delay_ms, uint16_t stepSize)
 
 void moveLeftEyeLeftRight(uint16_t target, uint16_t delay_ms, uint16_t stepSize)
 {
+    if (target > left_eye_left_right.left_most || target < left_eye_left_right.right_most || stepSize == 0) {
+        return;
+    }
 
+    if (target > left_eye_left_right.pos) {
+        for (; target >= left_eye_left_right.pos; left_eye_left_right.pos += stepSize) {
+            moveByMs(left_eye_left_right.comp, left_eye_left_right.pos, left_eye_left_right.driver_num);
+            delay(delay_ms);
+        }
+    } else {
+        for (; target <= left_eye_left_right.pos; left_eye_left_right.pos -= stepSize) {
+            moveByMs(left_eye_left_right.comp, left_eye_left_right.pos, left_eye_left_right.driver_num);
+            delay(delay_ms);
+        }
+    }
 }
 
+void moveRightEyeLeftRight(uint16_t target, uint16_t delay_ms, uint16_t stepSize)
+{
+    if (target > right_eye_left_right.left_most || target < right_eye_left_right.right_most || stepSize == 0) {
+        return;
+    }
 
-// Function to synchronize both eyes moving up and down
+    if (target > right_eye_left_right.pos) {
+        for (; target >= right_eye_left_right.pos; right_eye_left_right.pos += stepSize) {
+            moveByMs(right_eye_left_right.comp, right_eye_left_right.pos, right_eye_left_right.driver_num);
+            delay(delay_ms);
+        }
+    } else {
+        for (; target <= right_eye_left_right.pos; right_eye_left_right.pos -= stepSize) {
+            moveByMs(right_eye_left_right.comp, right_eye_left_right.pos, right_eye_left_right.driver_num);
+            delay(delay_ms);
+        }
+    }
+}
+
+// Function to move the eyes in a steep direction
+void moveEyesSteep(uint16_t leftEyeTargetUpDown, uint16_t leftEyeTargetLeftRight, uint16_t rightEyeTargetUpDown, uint16_t rightEyeTargetLeftRight, uint16_t delay_ms, uint16_t stepSize)
+{
+    // Move left eye up/down
+    if (leftEyeTargetUpDown > left_eye_up_down.down_most || leftEyeTargetUpDown < left_eye_up_down.up_most || stepSize == 0) {
+        return;
+    }
+    if (leftEyeTargetUpDown > left_eye_up_down.pos) {
+        for (; leftEyeTargetUpDown >= left_eye_up_down.pos; left_eye_up_down.pos += stepSize) {
+            moveByMs(left_eye_up_down.comp, left_eye_up_down.pos, left_eye_up_down.driver_num);
+            delay(delay_ms);
+        }
+    } else {
+        for (; leftEyeTargetUpDown <= left_eye_up_down.pos; left_eye_up_down.pos -= stepSize) {
+            moveByMs(left_eye_up_down.comp, left_eye_up_down.pos, left_eye_up_down.driver_num);
+            delay(delay_ms);
+        }
+    }
+
+    // Move left eye left/right
+    if (leftEyeTargetLeftRight > left_eye_left_right.left_most || leftEyeTargetLeftRight < left_eye_left_right.right_most || stepSize == 0) {
+        return;
+    }
+    if (leftEyeTargetLeftRight > left_eye_left_right.pos) {
+        for (; leftEyeTargetLeftRight >= left_eye_left_right.pos; left_eye_left_right.pos += stepSize) {
+            moveByMs(left_eye_left_right.comp, left_eye_left_right.pos, left_eye_left_right.driver_num);
+            delay(delay_ms);
+        }
+    } else {
+        for (; leftEyeTargetLeftRight <= left_eye_left_right.pos; left_eye_left_right.pos -= stepSize) {
+            moveByMs(left_eye_left_right.comp, left_eye_left_right.pos, left_eye_left_right.driver_num);
+            delay(delay_ms);
+        }
+    }
+
+    // Move right eye up/down
+    if (rightEyeTargetUpDown < right_eye_up_down.down_most || rightEyeTargetUpDown > right_eye_up_down.up_most || stepSize == 0) {
+        return;
+    }
+    if (rightEyeTargetUpDown > right_eye_up_down.pos) {
+        for (; rightEyeTargetUpDown >= right_eye_up_down.pos; right_eye_up_down.pos += stepSize) {
+            moveByMs(right_eye_up_down.comp, right_eye_up_down.pos, right_eye_up_down.driver_num);
+            delay(delay_ms);
+        }
+    } else {
+        for (; rightEyeTargetUpDown <= right_eye_up_down.pos; right_eye_up_down.pos -= stepSize) {
+            moveByMs(right_eye_up_down.comp, right_eye_up_down.pos, right_eye_up_down.driver_num);
+            delay(delay_ms);
+        }
+    }
+
+    // Move right eye left/right
+    if (rightEyeTargetLeftRight > right_eye_left_right.left_most || rightEyeTargetLeftRight < right_eye_left_right.right_most || stepSize == 0) {
+        return;
+    }
+    if (rightEyeTargetLeftRight > right_eye_left_right.pos) {
+        for (; rightEyeTargetLeftRight >= right_eye_left_right.pos; right_eye_left_right.pos += stepSize) {
+            moveByMs(right_eye_left_right.comp, right_eye_left_right.pos, right_eye_left_right.driver_num);
+            delay(delay_ms);
+        }
+    } else {
+        for (; rightEyeTargetLeftRight <= right_eye_left_right.pos; right_eye_left_right.pos -= stepSize) {
+            moveByMs(right_eye_left_right.comp, right_eye_left_right.pos, right_eye_left_right.driver_num);
+            delay(delay_ms);
+        }
+    }
+}
+
 void moveBothEyesUpDownSync(uint16_t target, uint16_t delay_ms, uint16_t stepSize)
 {
     Serial.println("moving");
@@ -254,7 +346,6 @@ void moveBothKouteksToFrownMax(uint16_t delay_ms, uint16_t stepSize)
     moveByMs(rightKoutek.top_comp, rightKoutek.top_part_smile_max, rightKoutek.driver_num);
 }
 
-
 void setup()
 {
     Serial.begin(115200);
@@ -272,27 +363,22 @@ void setup()
     moveByMs(leftKoutek.top_comp, leftKoutek.top_comp_pos, leftKoutek.driver_num);
     moveByMs(rightKoutek.bottom_comp, rightKoutek.bottom_comp_pos, rightKoutek.driver_num);
     moveByMs(rightKoutek.top_comp, rightKoutek.top_comp_pos, rightKoutek.driver_num);
+}
 
-    /*for (int i = 0; i <= 1200; ++i) {
-        moveByMs(0,i);
-    }*/
+void moveBothEyesSteepExpression(){
+    uint16_t leftEyeTargetUpDown = random(left_eye_up_down.up_most, left_eye_up_down.down_most);
+    uint16_t leftEyeTargetLeftRight = random(left_eye_left_right.right_most, left_eye_left_right.left_most);
+    uint16_t rightEyeTargetUpDown = random(right_eye_up_down.down_most, right_eye_up_down.up_most);
+    uint16_t rightEyeTargetLeftRight = random(right_eye_left_right.right_most, right_eye_left_right.left_most);
+
+    // Move eyes to random positions in a steep direction
+    moveEyesSteep(leftEyeTargetUpDown, leftEyeTargetLeftRight, rightEyeTargetUpDown, rightEyeTargetLeftRight, 1, 10);
 }
 
 void loop()
 {
-    /* delay(500);
-     moveBothKouteksToSmileMax(10, 2);
-     delay(500);
-     moveByMs(leftKoutek.bottom_comp, leftKoutek.bottom_comp_pos);
-     moveByMs(leftKoutek.top_comp, leftKoutek.top_comp_pos);
-     moveByMs(rightKoutek.bottom_comp, rightKoutek.bottom_comp_pos);
-     moveByMs(rightKoutek.top_comp, rightKoutek.top_comp_pos);*/
-    /*moveBothEyesUpDownSync(up_most, 0,1);
-    delay(1500);
-    moveBothEyesUpDownSync(down_most, 0,1);
-    delay(1500);*/
-    moveBothEyesUpDownSync(both_eyes_up_down.up_most, 2, 2);
-    delay(150);
-    moveBothEyesUpDownSync(both_eyes_up_down.down_most, 2, 2);
-    delay(150);
+    // Generate random positions for the eyes
+
+    moveBothEyesSteepExpression();
+    delay(2000); // Wait for 2 seconds before the next movement
 }
