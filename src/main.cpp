@@ -40,7 +40,39 @@ RightLidUp rightLidUp;
 RightLidDown rightLidDown;
 Chin chin;
 
+void centerAll()
+{
+    leftKoutekTop.move_center();
+    leftKoutekBottom.move_center();
+
+    rightKoutekTop.move_center();
+    rightKoutekBottom.move_center();
+
+    leftEyeUpDown.move_center();
+    leftEyeLeftRight.move_center();
+
+    rightEyeUpDown.move_center();
+    rightEyeLeftRight.move_center();
+}
+
+void fuckFace()
+{
+    leftKoutekTop.move_up_most();
+    leftKoutekBottom.move_up_most();
+
+    rightKoutekTop.move_up_most();
+    rightKoutekBottom.move_up_most();
+
+    rightEyeUpDown.move_up_most();
+    rightEyeLeftRight.move_left_most();
+
+    leftEyeUpDown.move_up_most();
+    leftEyeLeftRight.move_right_most();
+}
+
 void (* expressions[])() = {
+        fuckFace,
+        centerAll
 };
 
 void setup()
@@ -49,52 +81,15 @@ void setup()
 
     setupDrivers();
 
-    int move_delay = 1000;
-    delay(500);
+    delay(100);
 
-    /*leftKoutekTop.move_center();*/
-    /*leftKoutekBottom.move_center();*/
-
-    rightKoutekTop.move_center();
-    rightKoutekBottom.move_center();
-
-
-    delay(move_delay);
-    /*leftKoutekTop.move_up_most();*/
-    /*leftKoutekBottom.move_up_most();*/
-
-    rightKoutekTop.move_up_most();
-    rightKoutekBottom.move_up_most();
-
-
-    delay(move_delay);
-    /*leftKoutekTop.move_center();*/
-    /*leftKoutekBottom.move_center();*/
-
-    rightKoutekTop.move_center();
-    rightKoutekBottom.move_center();
-
-
-    delay(move_delay);
-    /*leftKoutekTop.move_down_most();*/
-    /*leftKoutekBottom.move_down_most();*/
-
-    rightKoutekTop.move_down_most();
-    rightKoutekBottom.move_down_most();
-
-
-    delay(move_delay);
-    /*leftKoutekTop.move_center();*/
-    /*leftKoutekBottom.move_center();*/
-
-    rightKoutekTop.move_center();
-    rightKoutekBottom.move_center();
+    centerAll();
 }
 
 void loop()
 {
 
-    /*int randomIndex = random(0, sizeof(expressions) / sizeof(expressions[0]));*/
-    /*expressions[randomIndex]();*/
-    delay(random(4000, 8000));
+    int randomIndex = random(0, sizeof(expressions) / sizeof(expressions[0]));
+    expressions[randomIndex]();
+    delay(random(1500, 4000));
 }
