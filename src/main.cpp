@@ -1,245 +1,42 @@
 #include <Arduino.h>
-#include "SPI.h"
-#include <Adafruit_PWMServoDriver.h>
-#include <stdlib.h>
+#include "driver.h"
+#include "face/eyes/left/left_eye_left_right.h"
+#include "face/eyes/left/left_eye_up_down.h"
+#include "face/eyes/right/right_eye_left_right.h"
+#include "face/eyes/right/right_eye_up_down.h"
+#include "face/lids/left/left_lid_down.h"
+#include "face/lids/left/left_lid_up.h"
+#include "face/mouth/chin/chin.h"
+#include "face/mouth/teeth/top/top_tooth_left.h"
+#include "face/mouth/teeth/bottom/bottom_tooth_right.h"
+#include "face/mouth/teeth/bottom/bottom_tooth_center.h"
+#include "face/mouth/teeth/bottom/bottom_tooth_left.h"
+#include "face/mouth/teeth/top/top_tooth_right.h"
+#include "face/mouth/teeth/top/top_tooth_center.h"
+#include "face/mouth/koutky/right/right_koutek.h"
+#include "face/mouth/koutky/left/left_koutek.h"
+#include "face/lids/right/right_lid_up.h"
+#include "face/lids/right/right_lid_down.h"
 
-Adafruit_PWMServoDriver driver0 = Adafruit_PWMServoDriver(0x40);
-Adafruit_PWMServoDriver driver1 = Adafruit_PWMServoDriver(0x41);
+LeftEyeUpDown left_eye_up_down;
+RightEyeUpDown right_eye_up_down;
+LeftEyeLeftRight left_eye_left_right;
+RightEyeLeftRight right_eye_left_right;
+LeftKoutek leftKoutek;
+RightKoutek rightKoutek;
+TopToothLeft topToothLeft;
+TopToothCenter topToothCenter;
+TopToothRight topToothRight;
+BottomToothLeft downToothLeft;
+BottomToothCenter downToothCenter;
+BottomToothRight downToothRight;
+LeftLidUp leftLidUp;
+LeftLidDown leftLidDown;
+RightLidUp rightLidUp;
+RightLidDown rightLidDown;
+Chin chin;
 
-const long SERVOMIN = 125;
-const long SERVOMAX = 600;
-
-long msToPulse(uint16_t ms)
-{
-    return map(ms, 500, 2500, SERVOMIN, SERVOMAX);
-}
-
-void moveByMs(uint8_t part, uint16_t ms, uint8_t driverNum)
-{
-    if (driverNum == 0) {
-        driver0.setPWM(part, 0, msToPulse(ms));
-    } else {
-        driver1.setPWM(part, 0, msToPulse(ms));
-    }
-}
-
-struct left_eye_up_down {
-    const uint8_t driver_num = 1;
-    const uint8_t comp = 1;
-    const uint16_t up_most = 1650;
-    const uint16_t center = 1450;
-    const uint16_t down_most = 1250;
-    uint16_t pos = 0;
-
-    void center_pos()
-    {
-        moveByMs(comp, center, driver_num);
-        pos = center;
-    }
-
-    void up_most_pos(){
-        moveByMs(comp, up_most, driver_num);
-        pos = up_most;
-    }
-
-    void down_most_pos(){
-        moveByMs(comp, down_most, driver_num);
-        pos = down_most;
-    }
-};
-
-struct right_eye_up_down {
-    const uint8_t driver_num = 1;
-    const uint8_t comp = 6;
-    const uint16_t up_most = 1350;
-    const uint16_t center = 1550;
-    const uint16_t down_most = 1750;
-    uint16_t pos = 0;
-
-    void center_pos()
-    {
-        moveByMs(comp, center, driver_num);
-        pos = center;
-    }
-
-    void up_most_pos(){
-        moveByMs(comp, up_most, driver_num);
-        pos = up_most;
-    }
-
-    void down_most_pos(){
-        moveByMs(comp, down_most, driver_num);
-        pos = down_most;
-    }
-};
-
-struct left_eye_left_right {
-
-    const uint8_t driver_num = 1;
-    const uint8_t comp = 0;
-    const uint16_t right_most = 1240;
-    const uint16_t center = 1400;
-    const uint16_t left_most = 1540;
-    uint16_t pos = 0;
-
-    void center_pos()
-    {
-        moveByMs(comp, center, driver_num);
-        pos = center;
-    }
-
-    void left_most_pos(){
-        moveByMs(comp, left_most, driver_num);
-        pos = left_most;
-    }
-
-    void right_most_pos(){
-        moveByMs(comp, right_most, driver_num);
-        pos = right_most;
-    }
-};
-
-struct right_eye_left_right {
-    const uint8_t driver_num = 1;
-    const uint8_t comp = 5;
-    const uint16_t right_most = 1540;
-    const uint16_t center = 1400;
-    const uint16_t left_most = 1240;
-    uint16_t pos = 0;
-
-    void center_pos()
-    {
-        moveByMs(comp, center, driver_num);
-        pos = center;
-    }
-
-    void left_most_pos(){
-        moveByMs(comp, left_most, driver_num);
-        pos = left_most;
-    }
-
-    void right_most_pos(){
-        moveByMs(comp, right_most, driver_num);
-        pos = right_most;
-    }
-};
-
-struct both_eyes_up_down {
-private :
-    right_eye_up_down rightEyeUpDown;
-    left_eye_up_down leftEyeUpDown;
-public:
-    const uint16_t up_most = 1650;
-    const uint16_t center = 1450;
-    const uint16_t down_most = 1250;
-};
-
-struct left_lid_up {
-    const uint8_t driver_num = 1;
-    const uint8_t part = 2;
-};
-
-struct left_lid_down {
-    const uint8_t driver_num = 1;
-    const uint8_t part = 3;
-};
-
-struct left_brow {
-    const uint8_t driver_num = 1;
-    const uint8_t part = 4;
-};
-
-struct right_lid_up {
-    const uint8_t driver_num = 1;
-    const uint8_t part = 7;
-};
-
-struct right_lid_down {
-    const uint8_t driver_num = 1;
-    const uint8_t part = 8;
-};
-
-struct right_brow {
-    const uint8_t driver_num = 1;
-    const uint8_t part = 9;
-};
-
-struct left_koutek {
-    const uint8_t driver_num = 0;
-    const uint8_t bottom_comp = 0;
-    const uint8_t top_comp = 1;
-    uint16_t bottom_part_up_most = 1700;
-    uint16_t bottom_part_center = 1450;
-    uint16_t bottom_comp_pos = bottom_part_center;
-
-    uint16_t top_part_up_most = 2000;
-    uint16_t top_part_center = 1450;
-    uint16_t top_comp_pos = top_part_center;
-};
-
-struct right_koutek {
-    const uint8_t driver_num = 0;
-    const uint8_t bottom_comp = 2;
-    const uint8_t top_comp = 3;
-    uint16_t bottom_part_smile_most = 1200;
-    uint16_t bottom_part_center = 1450;
-    uint16_t bottom_comp_pos = bottom_part_center;
-
-    uint16_t top_part_up_most = 600;
-    uint16_t top_part_center = 1450;
-    uint16_t top_comp_pos = top_part_center;
-};
-
-struct top_tooth_left {
-    const uint8_t driver_num = 0;
-    const uint8_t part = 4;
-};
-
-struct top_tooth_center {
-    const uint8_t driver_num = 0;
-    const uint8_t part = 5;
-};
-
-struct top_tooth_right {
-    const uint8_t driver_num = 0;
-    const uint8_t part = 6;
-};
-
-struct down_tooth_left {
-    const uint8_t driver_num = 0;
-    const uint8_t part = 7;
-};
-
-struct down_tooth_center {
-    const uint8_t driver_num = 0;
-    const uint8_t part = 8;
-};
-
-struct down_tooth_right {
-    const uint8_t driver_num = 0;
-    const uint8_t part = 9;
-};
-
-struct chin {
-    const uint8_t driver_num = 0;
-    const uint8_t part = 10;
-};
-
-left_eye_up_down left_eye_up_down;
-right_eye_up_down right_eye_up_down;
-left_eye_left_right left_eye_left_right;
-right_eye_left_right right_eye_left_right;
-both_eyes_up_down both_eyes_up_down;
-left_koutek leftKoutek;
-right_koutek rightKoutek;
-top_tooth_left topToothLeft;
-top_tooth_center topToothCenter;
-top_tooth_right topToothRight;
-down_tooth_left downToothLeft;
-down_tooth_center downToothCenter;
-down_tooth_right downToothRight;
-chin chin;
-
+/*
 void moveLeftEyeUpDown(uint16_t target, uint16_t delay_ms, uint16_t stepSize)
 {
     if (target > left_eye_up_down.down_most || target < left_eye_up_down.up_most || stepSize == 0) {
@@ -513,22 +310,31 @@ void moveBothKouteksToFrownMax(uint16_t delay_ms, uint16_t stepSize)
     moveByMs(rightKoutek.bottom_comp, rightKoutek.bottom_part_smile_most, rightKoutek.driver_num);
     moveByMs(rightKoutek.top_comp, rightKoutek.top_part_up_most, rightKoutek.driver_num);
 }
+*/
 
-// Array of pointers to expression functions
+/*
 void (* expressions[])() = {
         moveBothEyesSteepRandomExpression,
         moveBothEyesSteepSyncExpression
 };
+*/
 
 void setup()
 {
     Serial.begin(115200);
 
-    driver0.begin();
+    setupDrivers();
+
+    right_eye_left_right.move_center();
+    right_eye_up_down.move_center();
+    left_eye_up_down.move_center();
+    left_eye_left_right.move_center();
+
+    /*driver0.begin();
     driver0.setPWMFreq(60);
 
     driver1.begin();
-    driver1.setPWMFreq(60);
+    driver1.setPWMFreq(60);*/
 
     delay(500);
 
@@ -579,42 +385,41 @@ void setup()
     }*/
 
     int delay_ms = 100;
-    right_eye_up_down.center_pos();
+    right_eye_up_down.move_center();
     delay(delay_ms);
-    right_eye_left_right.center_pos();
+    right_eye_left_right.move_center();
     delay(delay_ms);
-    left_eye_up_down.center_pos();
+    left_eye_up_down.move_center();
     delay(delay_ms);
-    left_eye_left_right.center_pos();
+    left_eye_left_right.move_center();
     delay(delay_ms);
 }
 
 void loop()
 {
     // Select a random expression from the array
-    int randomIndex = random(0, sizeof(expressions) / sizeof(expressions[0]));
+    /*int randomIndex = random(0, sizeof(expressions) / sizeof(expressions[0]));*/
     /*expressions[randomIndex]();*/
-    moveBothEyesSteepRandomExpression();
     // Wait for a random amount of time between 4 to 8 seconds before executing the next expression
     delay(random(4000, 8000));
 
-   /* int delay_ms = 500;
-    right_eye_up_down.center_pos();
-    delay(delay_ms);
-    right_eye_left_right.center_pos();
-    delay(delay_ms);
-    left_eye_up_down.center_pos();
-    delay(delay_ms);
-    left_eye_left_right.center_pos();
-    delay(delay_ms);
+    /* int delay_ms = 500;
+     right_eye_up_down.move_center();
+     delay(delay_ms);
+     right_eye_left_right.move_center();
+     delay(delay_ms);
+     left_eye_up_down.move_center();
+     delay(delay_ms);
+     left_eye_left_right.move_center();
+     delay(delay_ms);
 
-    left_eye_up_down.up_most_pos();
-    delay(delay_ms);
-    right_eye_up_down.up_most_pos();
-    delay(delay_ms);
-    left_eye_up_down.down_most_pos();
-    delay(delay_ms);
-    right_eye_up_down.down_most_pos();
-    delay(delay_ms);*/
+     left_eye_up_down.move_up_most();
+     delay(delay_ms);
+     right_eye_up_down.move_up_most();
+     delay(delay_ms);
+     left_eye_up_down.move_down_most();
+     delay(delay_ms);
+     right_eye_up_down.move_down_most();
+     delay(delay_ms);*/
 
 }
