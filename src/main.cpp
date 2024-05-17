@@ -18,10 +18,10 @@
 #include "face/lids/right/right_lid_up.h"
 #include "face/lids/right/right_lid_down.h"
 
-LeftEyeUpDown left_eye_up_down;
-RightEyeUpDown right_eye_up_down;
-LeftEyeLeftRight left_eye_left_right;
-RightEyeLeftRight right_eye_left_right;
+LeftEyeUpDown leftEyeUpDown;
+RightEyeUpDown rightEyeUpDown;
+LeftEyeLeftRight leftEyeLeftRight;
+RightEyeLeftRight rightEyeLeftRight;
 LeftKoutek leftKoutek;
 RightKoutek rightKoutek;
 TopToothLeft topToothLeft;
@@ -39,18 +39,18 @@ Chin chin;
 /*
 void moveLeftEyeUpDown(uint16_t target, uint16_t delay_ms, uint16_t stepSize)
 {
-    if (target > left_eye_up_down.down_most || target < left_eye_up_down.up_most || stepSize == 0) {
+    if (target > leftEyeUpDown.down_most || target < leftEyeUpDown.up_most || stepSize == 0) {
         return;
     }
 
-    if (target > left_eye_up_down.pos) {
-        for (; target >= left_eye_up_down.pos; left_eye_up_down.pos += stepSize) {
-            moveByMs(left_eye_up_down.comp, left_eye_up_down.pos, left_eye_up_down.driver_num);
+    if (target > leftEyeUpDown.pos) {
+        for (; target >= leftEyeUpDown.pos; leftEyeUpDown.pos += stepSize) {
+            moveByMs(leftEyeUpDown.comp, leftEyeUpDown.pos, leftEyeUpDown.driver_num);
             delay(delay_ms);
         }
     } else {
-        for (; target <= left_eye_up_down.pos; left_eye_up_down.pos -= stepSize) {
-            moveByMs(left_eye_up_down.comp, left_eye_up_down.pos, left_eye_up_down.driver_num);
+        for (; target <= leftEyeUpDown.pos; leftEyeUpDown.pos -= stepSize) {
+            moveByMs(leftEyeUpDown.comp, leftEyeUpDown.pos, leftEyeUpDown.driver_num);
             delay(delay_ms);
         }
     }
@@ -58,18 +58,18 @@ void moveLeftEyeUpDown(uint16_t target, uint16_t delay_ms, uint16_t stepSize)
 
 void moveRightEyeUpDown(uint16_t target, uint16_t delay_ms, uint16_t stepSize)
 {
-    if (target < right_eye_up_down.down_most || target > right_eye_up_down.up_most || stepSize == 0) {
+    if (target < rightEyeUpDown.down_most || target > rightEyeUpDown.up_most || stepSize == 0) {
         return;
     }
 
-    if (target > right_eye_up_down.pos) {
-        for (; target >= right_eye_up_down.pos; right_eye_up_down.pos += stepSize) {
-            moveByMs(right_eye_up_down.comp, right_eye_up_down.pos, right_eye_up_down.driver_num);
+    if (target > rightEyeUpDown.pos) {
+        for (; target >= rightEyeUpDown.pos; rightEyeUpDown.pos += stepSize) {
+            moveByMs(rightEyeUpDown.comp, rightEyeUpDown.pos, rightEyeUpDown.driver_num);
             delay(delay_ms);
         }
     } else {
-        for (; target <= right_eye_up_down.pos; right_eye_up_down.pos -= stepSize) {
-            moveByMs(right_eye_up_down.comp, right_eye_up_down.pos, right_eye_up_down.driver_num);
+        for (; target <= rightEyeUpDown.pos; rightEyeUpDown.pos -= stepSize) {
+            moveByMs(rightEyeUpDown.comp, rightEyeUpDown.pos, rightEyeUpDown.driver_num);
             delay(delay_ms);
         }
     }
@@ -77,18 +77,18 @@ void moveRightEyeUpDown(uint16_t target, uint16_t delay_ms, uint16_t stepSize)
 
 void moveLeftEyeLeftRight(uint16_t target, uint16_t delay_ms, uint16_t stepSize)
 {
-    if (target > left_eye_left_right.left_most || target < left_eye_left_right.right_most || stepSize == 0) {
+    if (target > leftEyeLeftRight.left_most || target < leftEyeLeftRight.right_most || stepSize == 0) {
         return;
     }
 
-    if (target > left_eye_left_right.pos) {
-        for (; target >= left_eye_left_right.pos; left_eye_left_right.pos += stepSize) {
-            moveByMs(left_eye_left_right.comp, left_eye_left_right.pos, left_eye_left_right.driver_num);
+    if (target > leftEyeLeftRight.pos) {
+        for (; target >= leftEyeLeftRight.pos; leftEyeLeftRight.pos += stepSize) {
+            moveByMs(leftEyeLeftRight.comp, leftEyeLeftRight.pos, leftEyeLeftRight.driver_num);
             delay(delay_ms);
         }
     } else {
-        for (; target <= left_eye_left_right.pos; left_eye_left_right.pos -= stepSize) {
-            moveByMs(left_eye_left_right.comp, left_eye_left_right.pos, left_eye_left_right.driver_num);
+        for (; target <= leftEyeLeftRight.pos; leftEyeLeftRight.pos -= stepSize) {
+            moveByMs(leftEyeLeftRight.comp, leftEyeLeftRight.pos, leftEyeLeftRight.driver_num);
             delay(delay_ms);
         }
     }
@@ -96,18 +96,18 @@ void moveLeftEyeLeftRight(uint16_t target, uint16_t delay_ms, uint16_t stepSize)
 
 void moveRightEyeLeftRight(uint16_t target, uint16_t delay_ms, uint16_t stepSize)
 {
-    if (target > right_eye_left_right.left_most || target < right_eye_left_right.right_most || stepSize == 0) {
+    if (target > rightEyeLeftRight.left_most || target < rightEyeLeftRight.right_most || stepSize == 0) {
         return;
     }
 
-    if (target > right_eye_left_right.pos) {
-        for (; target >= right_eye_left_right.pos; right_eye_left_right.pos += stepSize) {
-            moveByMs(right_eye_left_right.comp, right_eye_left_right.pos, right_eye_left_right.driver_num);
+    if (target > rightEyeLeftRight.pos) {
+        for (; target >= rightEyeLeftRight.pos; rightEyeLeftRight.pos += stepSize) {
+            moveByMs(rightEyeLeftRight.comp, rightEyeLeftRight.pos, rightEyeLeftRight.driver_num);
             delay(delay_ms);
         }
     } else {
-        for (; target <= right_eye_left_right.pos; right_eye_left_right.pos -= stepSize) {
-            moveByMs(right_eye_left_right.comp, right_eye_left_right.pos, right_eye_left_right.driver_num);
+        for (; target <= rightEyeLeftRight.pos; rightEyeLeftRight.pos -= stepSize) {
+            moveByMs(rightEyeLeftRight.comp, rightEyeLeftRight.pos, rightEyeLeftRight.driver_num);
             delay(delay_ms);
         }
     }
@@ -118,69 +118,69 @@ void moveEyesSteep(uint16_t leftEyeTargetUpDown, uint16_t leftEyeTargetLeftRight
                    uint16_t rightEyeTargetLeftRight, uint16_t delay_ms, uint16_t stepSize)
 {
     // Move left eye up/down
-    if (leftEyeTargetUpDown > left_eye_up_down.down_most || leftEyeTargetUpDown < left_eye_up_down.up_most ||
+    if (leftEyeTargetUpDown > leftEyeUpDown.down_most || leftEyeTargetUpDown < leftEyeUpDown.up_most ||
         stepSize == 0) {
         return;
     }
-    if (leftEyeTargetUpDown > left_eye_up_down.pos) {
-        for (; leftEyeTargetUpDown >= left_eye_up_down.pos; left_eye_up_down.pos += stepSize) {
-            moveByMs(left_eye_up_down.comp, left_eye_up_down.pos, left_eye_up_down.driver_num);
+    if (leftEyeTargetUpDown > leftEyeUpDown.pos) {
+        for (; leftEyeTargetUpDown >= leftEyeUpDown.pos; leftEyeUpDown.pos += stepSize) {
+            moveByMs(leftEyeUpDown.comp, leftEyeUpDown.pos, leftEyeUpDown.driver_num);
             delay(delay_ms);
         }
     } else {
-        for (; leftEyeTargetUpDown <= left_eye_up_down.pos; left_eye_up_down.pos -= stepSize) {
-            moveByMs(left_eye_up_down.comp, left_eye_up_down.pos, left_eye_up_down.driver_num);
+        for (; leftEyeTargetUpDown <= leftEyeUpDown.pos; leftEyeUpDown.pos -= stepSize) {
+            moveByMs(leftEyeUpDown.comp, leftEyeUpDown.pos, leftEyeUpDown.driver_num);
             delay(delay_ms);
         }
     }
 
     // Move left eye left/right
-    if (leftEyeTargetLeftRight > left_eye_left_right.left_most ||
-        leftEyeTargetLeftRight < left_eye_left_right.right_most || stepSize == 0) {
+    if (leftEyeTargetLeftRight > leftEyeLeftRight.left_most ||
+        leftEyeTargetLeftRight < leftEyeLeftRight.right_most || stepSize == 0) {
         return;
     }
-    if (leftEyeTargetLeftRight > left_eye_left_right.pos) {
-        for (; leftEyeTargetLeftRight >= left_eye_left_right.pos; left_eye_left_right.pos += stepSize) {
-            moveByMs(left_eye_left_right.comp, left_eye_left_right.pos, left_eye_left_right.driver_num);
+    if (leftEyeTargetLeftRight > leftEyeLeftRight.pos) {
+        for (; leftEyeTargetLeftRight >= leftEyeLeftRight.pos; leftEyeLeftRight.pos += stepSize) {
+            moveByMs(leftEyeLeftRight.comp, leftEyeLeftRight.pos, leftEyeLeftRight.driver_num);
             delay(delay_ms);
         }
     } else {
-        for (; leftEyeTargetLeftRight <= left_eye_left_right.pos; left_eye_left_right.pos -= stepSize) {
-            moveByMs(left_eye_left_right.comp, left_eye_left_right.pos, left_eye_left_right.driver_num);
+        for (; leftEyeTargetLeftRight <= leftEyeLeftRight.pos; leftEyeLeftRight.pos -= stepSize) {
+            moveByMs(leftEyeLeftRight.comp, leftEyeLeftRight.pos, leftEyeLeftRight.driver_num);
             delay(delay_ms);
         }
     }
 
     // Move right eye up/down
-    if (rightEyeTargetUpDown < right_eye_up_down.down_most || rightEyeTargetUpDown > right_eye_up_down.up_most ||
+    if (rightEyeTargetUpDown < rightEyeUpDown.down_most || rightEyeTargetUpDown > rightEyeUpDown.up_most ||
         stepSize == 0) {
         return;
     }
-    if (rightEyeTargetUpDown > right_eye_up_down.pos) {
-        for (; rightEyeTargetUpDown >= right_eye_up_down.pos; right_eye_up_down.pos += stepSize) {
-            moveByMs(right_eye_up_down.comp, right_eye_up_down.pos, right_eye_up_down.driver_num);
+    if (rightEyeTargetUpDown > rightEyeUpDown.pos) {
+        for (; rightEyeTargetUpDown >= rightEyeUpDown.pos; rightEyeUpDown.pos += stepSize) {
+            moveByMs(rightEyeUpDown.comp, rightEyeUpDown.pos, rightEyeUpDown.driver_num);
             delay(delay_ms);
         }
     } else {
-        for (; rightEyeTargetUpDown <= right_eye_up_down.pos; right_eye_up_down.pos -= stepSize) {
-            moveByMs(right_eye_up_down.comp, right_eye_up_down.pos, right_eye_up_down.driver_num);
+        for (; rightEyeTargetUpDown <= rightEyeUpDown.pos; rightEyeUpDown.pos -= stepSize) {
+            moveByMs(rightEyeUpDown.comp, rightEyeUpDown.pos, rightEyeUpDown.driver_num);
             delay(delay_ms);
         }
     }
 
     // Move right eye left/right
-    if (rightEyeTargetLeftRight > right_eye_left_right.left_most ||
-        rightEyeTargetLeftRight < right_eye_left_right.right_most || stepSize == 0) {
+    if (rightEyeTargetLeftRight > rightEyeLeftRight.left_most ||
+        rightEyeTargetLeftRight < rightEyeLeftRight.right_most || stepSize == 0) {
         return;
     }
-    if (rightEyeTargetLeftRight > right_eye_left_right.pos) {
-        for (; rightEyeTargetLeftRight >= right_eye_left_right.pos; right_eye_left_right.pos += stepSize) {
-            moveByMs(right_eye_left_right.comp, right_eye_left_right.pos, right_eye_left_right.driver_num);
+    if (rightEyeTargetLeftRight > rightEyeLeftRight.pos) {
+        for (; rightEyeTargetLeftRight >= rightEyeLeftRight.pos; rightEyeLeftRight.pos += stepSize) {
+            moveByMs(rightEyeLeftRight.comp, rightEyeLeftRight.pos, rightEyeLeftRight.driver_num);
             delay(delay_ms);
         }
     } else {
-        for (; rightEyeTargetLeftRight <= right_eye_left_right.pos; right_eye_left_right.pos -= stepSize) {
-            moveByMs(right_eye_left_right.comp, right_eye_left_right.pos, right_eye_left_right.driver_num);
+        for (; rightEyeTargetLeftRight <= rightEyeLeftRight.pos; rightEyeLeftRight.pos -= stepSize) {
+            moveByMs(rightEyeLeftRight.comp, rightEyeLeftRight.pos, rightEyeLeftRight.driver_num);
             delay(delay_ms);
         }
     }
@@ -190,10 +190,10 @@ void moveEyesSteep(uint16_t leftEyeTargetUpDown, uint16_t leftEyeTargetLeftRight
 void moveBothEyesSteepRandomExpression()
 {
     // Generate random positions for the eyes
-    uint16_t leftEyeTargetUpDown = random(left_eye_up_down.up_most, left_eye_up_down.down_most);
-    uint16_t leftEyeTargetLeftRight = random(left_eye_left_right.right_most, left_eye_left_right.left_most);
-    uint16_t rightEyeTargetUpDown = random(right_eye_up_down.down_most, right_eye_up_down.up_most);
-    uint16_t rightEyeTargetLeftRight = random(right_eye_left_right.right_most, right_eye_left_right.left_most);
+    uint16_t leftEyeTargetUpDown = random(leftEyeUpDown.up_most, leftEyeUpDown.down_most);
+    uint16_t leftEyeTargetLeftRight = random(leftEyeLeftRight.right_most, leftEyeLeftRight.left_most);
+    uint16_t rightEyeTargetUpDown = random(rightEyeUpDown.down_most, rightEyeUpDown.up_most);
+    uint16_t rightEyeTargetLeftRight = random(rightEyeLeftRight.right_most, rightEyeLeftRight.left_most);
 
     // Move eyes to random positions in a steep direction
     moveEyesSteep(leftEyeTargetUpDown, leftEyeTargetLeftRight, rightEyeTargetUpDown, rightEyeTargetLeftRight, 3, 10);
@@ -203,10 +203,10 @@ void moveBothEyesSteepRandomExpression()
 void moveBothEyesSteepSyncExpression()
 {
     // Generate random positions for up/down and left/right
-    uint16_t targetUpDown = random(min(left_eye_up_down.up_most, right_eye_up_down.down_most),
-                                   max(left_eye_up_down.down_most, right_eye_up_down.up_most));
-    uint16_t targetLeftRight = random(min(left_eye_left_right.right_most, right_eye_left_right.right_most),
-                                      max(left_eye_left_right.left_most, right_eye_left_right.left_most));
+    uint16_t targetUpDown = random(min(leftEyeUpDown.up_most, rightEyeUpDown.down_most),
+                                   max(leftEyeUpDown.down_most, rightEyeUpDown.up_most));
+    uint16_t targetLeftRight = random(min(leftEyeLeftRight.right_most, rightEyeLeftRight.right_most),
+                                      max(leftEyeLeftRight.left_most, rightEyeLeftRight.left_most));
 
     // Move left eye to target positions
     moveEyesSteep(targetUpDown, targetLeftRight, targetUpDown, targetLeftRight, 5, 10);
@@ -218,21 +218,21 @@ void moveBothEyesUpDownSync(uint16_t target, uint16_t delay_ms, uint16_t stepSiz
     if (stepSize == 0) {
         return;  // Prevent zero division error with step size
     }
-    const uint16_t RIGHT_EYE_RANGE_SUM = right_eye_up_down.up_most + right_eye_up_down.down_most;  // 1750 + 1200
-    const uint16_t LEFT_EYE_RANGE_SUM = left_eye_up_down.up_most + left_eye_up_down.down_most;
+    const uint16_t RIGHT_EYE_RANGE_SUM = rightEyeUpDown.up_most + rightEyeUpDown.down_most;  // 1750 + 1200
+    const uint16_t LEFT_EYE_RANGE_SUM = leftEyeUpDown.up_most + leftEyeUpDown.down_most;
 
-    if (target > right_eye_up_down.pos) {
-        for (; target >= right_eye_up_down.pos; right_eye_up_down.pos += stepSize) {
-            moveByMs(right_eye_up_down.comp, right_eye_up_down.pos, right_eye_up_down.driver_num); // Move right eye
-            left_eye_up_down.pos = LEFT_EYE_RANGE_SUM - right_eye_up_down.pos;  // Calculate left eye position
-            moveByMs(left_eye_up_down.comp, left_eye_up_down.pos, left_eye_up_down.driver_num); // Move left eye
+    if (target > rightEyeUpDown.pos) {
+        for (; target >= rightEyeUpDown.pos; rightEyeUpDown.pos += stepSize) {
+            moveByMs(rightEyeUpDown.comp, rightEyeUpDown.pos, rightEyeUpDown.driver_num); // Move right eye
+            leftEyeUpDown.pos = LEFT_EYE_RANGE_SUM - rightEyeUpDown.pos;  // Calculate left eye position
+            moveByMs(leftEyeUpDown.comp, leftEyeUpDown.pos, leftEyeUpDown.driver_num); // Move left eye
             delay(delay_ms);
         }
     } else {
-        for (; target <= right_eye_up_down.pos; right_eye_up_down.pos -= stepSize) {
-            moveByMs(right_eye_up_down.comp, right_eye_up_down.pos, right_eye_up_down.driver_num); // Move right eye
-            left_eye_up_down.pos = LEFT_EYE_RANGE_SUM - right_eye_up_down.pos;  // Calculate left eye position
-            moveByMs(left_eye_up_down.comp, left_eye_up_down.pos, left_eye_up_down.driver_num); // Move left eye
+        for (; target <= rightEyeUpDown.pos; rightEyeUpDown.pos -= stepSize) {
+            moveByMs(rightEyeUpDown.comp, rightEyeUpDown.pos, rightEyeUpDown.driver_num); // Move right eye
+            leftEyeUpDown.pos = LEFT_EYE_RANGE_SUM - rightEyeUpDown.pos;  // Calculate left eye position
+            moveByMs(leftEyeUpDown.comp, leftEyeUpDown.pos, leftEyeUpDown.driver_num); // Move left eye
             delay(delay_ms);
         }
     }
@@ -324,39 +324,50 @@ void setup()
     Serial.begin(115200);
 
     setupDrivers();
+    delay(2000);
 
-    right_eye_left_right.move_center();
-    right_eye_up_down.move_center();
-    left_eye_up_down.move_center();
-    left_eye_left_right.move_center();
+    rightEyeLeftRight.move_center();
+    leftEyeLeftRight.move_center();
+    rightEyeUpDown.move_center();
+    leftEyeUpDown.move_center();
 
-    /*driver0.begin();
-    driver0.setPWMFreq(60);
+    delay(2000);
+    rightEyeLeftRight.move_right_most();
+    leftEyeLeftRight.move_right_most();
+    rightEyeUpDown.move_up_most();
+    leftEyeUpDown.move_up_most();
 
-    driver1.begin();
-    driver1.setPWMFreq(60);*/
+    delay(2000);
+    rightEyeLeftRight.move_center();
+    leftEyeLeftRight.move_center();
+    rightEyeUpDown.move_center();
+    leftEyeUpDown.move_center();
 
-    delay(500);
+    delay(2000);
+    rightEyeLeftRight.move_left_most();
+    leftEyeLeftRight.move_left_most();
+    rightEyeUpDown.move_down_most();
+    leftEyeUpDown.move_down_most();
 
-    /*moveLeftEyeUpDown(left_eye_up_down.center, 5, 10);
-    moveRightEyeUpDown(right_eye_up_down.center, 5, 10);
+    /*moveLeftEyeUpDown(leftEyeUpDown.center, 5, 10);
+    moveRightEyeUpDown(rightEyeUpDown.center, 5, 10);
     delay(random(4000, 8000));
-    moveLeftEyeUpDown(left_eye_up_down.up_most, 5, 10);
-    moveRightEyeUpDown(right_eye_up_down.up_most, 5, 10);
+    moveLeftEyeUpDown(leftEyeUpDown.up_most, 5, 10);
+    moveRightEyeUpDown(rightEyeUpDown.up_most, 5, 10);
     delay(random(4000, 8000));
-    moveLeftEyeUpDown(left_eye_up_down.down_most, 5, 10);
-    moveRightEyeUpDown(right_eye_up_down.down_most, 5, 10);
+    moveLeftEyeUpDown(leftEyeUpDown.down_most, 5, 10);
+    moveRightEyeUpDown(rightEyeUpDown.down_most, 5, 10);
     delay(10000);*/
 
 
-    /*moveLeftEyeLeftRight(left_eye_left_right.center, 5, 10);*/
-    /*moveRightEyeLeftRight(right_eye_left_right.center, 5, 10);
+    /*moveLeftEyeLeftRight(leftEyeLeftRight.center, 5, 10);*/
+    /*moveRightEyeLeftRight(rightEyeLeftRight.center, 5, 10);
     delay(5000);
-    *//*moveLeftEyeLeftRight(left_eye_left_right.left_most, 5, 10);*//*
-    moveRightEyeLeftRight(right_eye_left_right.left_most, 5, 10);
+    *//*moveLeftEyeLeftRight(leftEyeLeftRight.left_most, 5, 10);*//*
+    moveRightEyeLeftRight(rightEyeLeftRight.left_most, 5, 10);
     delay(5000);
-    *//*moveLeftEyeLeftRight(left_eye_left_right.right_most, 5, 10);*//*
-    moveRightEyeLeftRight(right_eye_left_right.right_most, 5, 10);
+    *//*moveLeftEyeLeftRight(leftEyeLeftRight.right_most, 5, 10);*//*
+    moveRightEyeLeftRight(rightEyeLeftRight.right_most, 5, 10);
     delay(5000);*/
     /*
     moveByMs(leftKoutek.bottom_comp, leftKoutek.bottom_comp_pos, leftKoutek.driver_num);
@@ -365,34 +376,24 @@ void setup()
     moveByMs(rightKoutek.top_comp, rightKoutek.top_comp_pos, rightKoutek.driver_num);*/
 
 
-    /*for (; right_eye_up_down.pos <= right_eye_up_down.up_most ; right_eye_up_down.pos++) {
-        moveByMs(right_eye_up_down.comp, right_eye_up_down.pos,right_eye_up_down.driver_num);
+    /*for (; rightEyeUpDown.pos <= rightEyeUpDown.up_most ; rightEyeUpDown.pos++) {
+        moveByMs(rightEyeUpDown.comp, rightEyeUpDown.pos,rightEyeUpDown.driver_num);
     }
 
-    for (; right_eye_up_down.pos <= right_eye_up_down.up_most ; right_eye_up_down.pos++) {
-        moveByMs(right_eye_up_down.comp, right_eye_up_down.pos,right_eye_up_down.driver_num);
+    for (; rightEyeUpDown.pos <= rightEyeUpDown.up_most ; rightEyeUpDown.pos++) {
+        moveByMs(rightEyeUpDown.comp, rightEyeUpDown.pos,rightEyeUpDown.driver_num);
     }
 
     delay(500);
 
-    for (; right_eye_left_right.pos <= right_eye_left_right.right_most; right_eye_left_right.pos++) {
-        moveByMs(right_eye_left_right.comp, right_eye_left_right.pos,right_eye_left_right.driver_num);
+    for (; rightEyeLeftRight.pos <= rightEyeLeftRight.right_most; rightEyeLeftRight.pos++) {
+        moveByMs(rightEyeLeftRight.comp, rightEyeLeftRight.pos,rightEyeLeftRight.driver_num);
     }
     delay(500);
 
-    for (; right_eye_left_right.pos >= right_eye_left_right.left_most; right_eye_left_right.pos--) {
-        moveByMs(right_eye_left_right.comp, right_eye_left_right.pos,right_eye_left_right.driver_num);
+    for (; rightEyeLeftRight.pos >= rightEyeLeftRight.left_most; rightEyeLeftRight.pos--) {
+        moveByMs(rightEyeLeftRight.comp, rightEyeLeftRight.pos,rightEyeLeftRight.driver_num);
     }*/
-
-    int delay_ms = 100;
-    right_eye_up_down.move_center();
-    delay(delay_ms);
-    right_eye_left_right.move_center();
-    delay(delay_ms);
-    left_eye_up_down.move_center();
-    delay(delay_ms);
-    left_eye_left_right.move_center();
-    delay(delay_ms);
 }
 
 void loop()
@@ -404,22 +405,22 @@ void loop()
     delay(random(4000, 8000));
 
     /* int delay_ms = 500;
-     right_eye_up_down.move_center();
+     rightEyeUpDown.move_center();
      delay(delay_ms);
-     right_eye_left_right.move_center();
+     rightEyeLeftRight.move_center();
      delay(delay_ms);
-     left_eye_up_down.move_center();
+     leftEyeUpDown.move_center();
      delay(delay_ms);
-     left_eye_left_right.move_center();
+     leftEyeLeftRight.move_center();
      delay(delay_ms);
 
-     left_eye_up_down.move_up_most();
+     leftEyeUpDown.move_up_most();
      delay(delay_ms);
-     right_eye_up_down.move_up_most();
+     rightEyeUpDown.move_up_most();
      delay(delay_ms);
-     left_eye_up_down.move_down_most();
+     leftEyeUpDown.move_down_most();
      delay(delay_ms);
-     right_eye_up_down.move_down_most();
+     rightEyeUpDown.move_down_most();
      delay(delay_ms);*/
 
 }

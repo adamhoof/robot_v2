@@ -1,5 +1,8 @@
 #include "driver.h"
 
+Adafruit_PWMServoDriver driver0 = Adafruit_PWMServoDriver(0x40);
+Adafruit_PWMServoDriver driver1 = Adafruit_PWMServoDriver(0x41);
+
 void setupDrivers() {
     driver0.begin();
     driver0.setPWMFreq(60);

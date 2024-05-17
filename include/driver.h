@@ -5,8 +5,8 @@
 #include <Adafruit_PWMServoDriver.h>
 #include <stdlib.h>
 
-Adafruit_PWMServoDriver driver0 = Adafruit_PWMServoDriver(0x40);
-Adafruit_PWMServoDriver driver1 = Adafruit_PWMServoDriver(0x41);
+extern Adafruit_PWMServoDriver driver0;
+extern Adafruit_PWMServoDriver driver1;
 
 const long SERVOMIN = 125;
 const long SERVOMAX = 600;
