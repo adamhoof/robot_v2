@@ -20,7 +20,7 @@ void RightKoutekBottom::move_down_most()
 
 void RightKoutekBottom::move_up_by(uint16_t moveBy)
 {
-    if (pos + moveBy < up_most) {
+    if (pos + moveBy > up_most) {
         move_up_most();
     } else {
         move_to(port, pos + moveBy, driver_num);

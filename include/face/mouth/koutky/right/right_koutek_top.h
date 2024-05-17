@@ -9,7 +9,7 @@ private:
     const uint8_t port = 3;
     const uint16_t up_most = 2000;
     const uint16_t center = 1450;
-    const uint16_t down_most = 900;
+    const uint16_t down_most = 950;
     uint16_t pos = 0;
 
 public:
