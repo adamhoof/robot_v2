@@ -49,6 +49,8 @@ void centerAll() {
     leftEyeLeftRight.move_center();
     rightEyeUpDown.move_center();
     rightEyeLeftRight.move_center();
+    leftLidTop.move_center();
+    rightLidTop.move_center();
 }
 
 void fuckFace() {
@@ -104,6 +106,25 @@ void look_down() {
     rightEyeUpDown.move_down_most();
 }
 
+void surprise() {
+    leftKoutekTop.move_down_most();
+    leftKoutekBottom.move_down_most();
+    rightKoutekTop.move_down_most();
+    rightKoutekBottom.move_down_most();
+    leftEyeUpDown.move_up_most();
+    rightEyeUpDown.move_up_most();
+    leftLidTop.move_up_most();
+    rightLidTop.move_up_most();
+}
+
+void blink() {
+    leftLidTop.move_down_most();
+    rightLidTop.move_down_most();
+    delay(100);
+    leftLidTop.move_up_most();
+    rightLidTop.move_up_most();
+}
+
 void (*expressions[])() = {
         centerAll,
         fuckFace,
@@ -112,7 +133,11 @@ void (*expressions[])() = {
         look_left,
         look_right,
         look_up,
-        look_down
+        look_down,
+        surprise,
+        blink,
+        //suspicious
+
 };
 
 void setup() {
@@ -120,6 +145,10 @@ void setup() {
     setupDrivers();
     delay(100);
     centerAll();
+    delay(100);
+
+    blink();
+    delay(50000);
 }
 
 void loop() {
