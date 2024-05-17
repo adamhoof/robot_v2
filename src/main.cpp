@@ -18,6 +18,7 @@
 #include "face/lids/right/right_lid_up.h"
 #include "face/lids/right/right_lid_down.h"
 #include "face/mouth/koutky/left/left_koutek_top.h"
+#include "face/mouth/koutky/right/right_koutek_bottom.h"
 
 LeftEyeUpDown leftEyeUpDown;
 RightEyeUpDown rightEyeUpDown;
@@ -25,7 +26,8 @@ LeftEyeLeftRight leftEyeLeftRight;
 RightEyeLeftRight rightEyeLeftRight;
 LeftKoutekBottom leftKoutekBottom;
 LeftKoutekTop leftKoutekTop;
-RightKoutek rightKoutek;
+RightKoutekTop rightKoutekTop;
+RightKoutekBottom rightKoutekBottom;
 TopToothLeft topToothLeft;
 TopToothCenter topToothCenter;
 TopToothRight topToothRight;
@@ -244,9 +246,9 @@ void moveBothKouteksToSmileMax(uint16_t delay_ms, uint16_t stepSize)
 {
     // Calculate the step increments for moving to the smile up_most position
     int stepsLeftBottom = (leftKoutekBottom.up_most - leftKoutekBottom.pos) / stepSize;
-    int stepsLeftTop = (leftKoutekBottom.top_part_up_most - leftKoutekBottom.pos) / stepSize;
+    int stepsLeftTop = (leftKoutekBottom.up_most - leftKoutekBottom.pos) / stepSize;
     int stepsRightBottom = (rightKoutek.bottom_part_smile_most - rightKoutek.pos) / stepSize;
-    int stepsRightTop = (rightKoutek.top_part_up_most - rightKoutek.pos) / stepSize;
+    int stepsRightTop = (rightKoutek.up_most - rightKoutek.pos) / stepSize;
 
     // Handle movement for each component
     for (int step = 0; step < abs(stepsLeftBottom); step++) {
@@ -267,27 +269,27 @@ void moveBothKouteksToSmileMax(uint16_t delay_ms, uint16_t stepSize)
 
     // Ensure all servos are set to the exact up_most smile position at the end
     moveByMs(leftKoutekBottom.bottom_comp, leftKoutekBottom.up_most, leftKoutekBottom.driver_num);
-    moveByMs(leftKoutekBottom.top_comp, leftKoutekBottom.top_part_up_most, leftKoutekBottom.driver_num);
+    moveByMs(leftKoutekBottom.top_comp, leftKoutekBottom.up_most, leftKoutekBottom.driver_num);
     moveByMs(rightKoutek.bottom_comp, rightKoutek.bottom_part_smile_most, rightKoutek.driver_num);
-    moveByMs(rightKoutek.top_comp, rightKoutek.top_part_up_most, rightKoutek.driver_num);
+    moveByMs(rightKoutek.top_comp, rightKoutek.up_most, rightKoutek.driver_num);
 }
 
 void moveBothKouteksToFrownMax(uint16_t delay_ms, uint16_t stepSize)
 {
     // Calculate the number of steps each koutek part needs to reach its smile up_most
     int stepsLeftBottom = abs(leftKoutekBottom.up_most - leftKoutekBottom.pos) / stepSize;
-    int stepsLeftTop = abs(leftKoutekBottom.top_part_up_most - leftKoutekBottom.pos) / stepSize;
+    int stepsLeftTop = abs(leftKoutekBottom.up_most - leftKoutekBottom.pos) / stepSize;
     int stepsRightBottom = abs(rightKoutek.bottom_part_smile_most - rightKoutek.pos) / stepSize;
-    int stepsRightTop = abs(rightKoutek.top_part_up_most - rightKoutek.pos) / stepSize;
+    int stepsRightTop = abs(rightKoutek.up_most - rightKoutek.pos) / stepSize;
 
     // Find the maximum steps needed to synchronize the movements
     int maxSteps = max(max(stepsLeftBottom, stepsLeftTop), max(stepsRightBottom, stepsRightTop));
 
     // Calculate the actual step sizes for each movement to synchronize the end point
     float stepLeftBottom = (float) (leftKoutekBottom.up_most - leftKoutekBottom.pos) / maxSteps;
-    float stepLeftTop = (float) (leftKoutekBottom.top_part_up_most - leftKoutekBottom.pos) / maxSteps;
+    float stepLeftTop = (float) (leftKoutekBottom.up_most - leftKoutekBottom.pos) / maxSteps;
     float stepRightBottom = (float) (rightKoutek.bottom_part_smile_most - rightKoutek.pos) / maxSteps;
-    float stepRightTop = (float) (rightKoutek.top_part_up_most - rightKoutek.pos) / maxSteps;
+    float stepRightTop = (float) (rightKoutek.up_most - rightKoutek.pos) / maxSteps;
 
     for (int i = 0; i < maxSteps; i++) {
         // Incrementally move each part towards its target
@@ -308,9 +310,9 @@ void moveBothKouteksToFrownMax(uint16_t delay_ms, uint16_t stepSize)
 
     // Ensure all servos are set to the exact up_most smile position at the end
     moveByMs(leftKoutekBottom.bottom_comp, leftKoutekBottom.up_most, leftKoutekBottom.driver_num);
-    moveByMs(leftKoutekBottom.top_comp, leftKoutekBottom.top_part_up_most, leftKoutekBottom.driver_num);
+    moveByMs(leftKoutekBottom.top_comp, leftKoutekBottom.up_most, leftKoutekBottom.driver_num);
     moveByMs(rightKoutek.bottom_comp, rightKoutek.bottom_part_smile_most, rightKoutek.driver_num);
-    moveByMs(rightKoutek.top_comp, rightKoutek.top_part_up_most, rightKoutek.driver_num);
+    moveByMs(rightKoutek.top_comp, rightKoutek.up_most, rightKoutek.driver_num);
 }
 */
 
@@ -332,18 +334,41 @@ void setup()
 
     leftKoutekTop.move_center();
     leftKoutekBottom.move_center();
+
+    rightKoutekTop.move_center();
+    rightKoutekBottom.move_center();
+
+
     delay(move_delay);
     leftKoutekTop.move_up_most();
     leftKoutekBottom.move_up_most();
+
+    rightKoutekTop.move_up_most();
+    rightKoutekBottom.move_up_most();
+
+
     delay(move_delay);
     leftKoutekTop.move_center();
     leftKoutekBottom.move_center();
+
+    rightKoutekTop.move_center();
+    rightKoutekBottom.move_center();
+
+
     delay(move_delay);
     leftKoutekTop.move_down_most();
     leftKoutekBottom.move_down_most();
+
+    rightKoutekTop.move_down_most();
+    rightKoutekBottom.move_down_most();
+
+
     delay(move_delay);
     leftKoutekTop.move_center();
     leftKoutekBottom.move_center();
+
+    rightKoutekTop.move_center();
+    rightKoutekBottom.move_center();
 }
 
 void loop()

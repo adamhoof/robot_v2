@@ -1,18 +1,26 @@
 #pragma once
-#include <Arduino.h>
 
-class RightKoutek {
+#include <Arduino.h>
+#include "driver.h"
+
+class RightKoutekTop {
 private:
     const uint8_t driver_num = 0;
-    const uint8_t bottom_comp = 2;
-    const uint8_t top_comp = 3;
-public:
-    uint16_t bottom_part_smile_most = 1200;
-    uint16_t bottom_part_center = 1450;
-    uint16_t bottom_comp_pos = bottom_part_center;
+    const uint8_t port = 3;
+    const uint16_t up_most = 2000;
+    const uint16_t center = 1450;
+    const uint16_t down_most = 900;
+    uint16_t pos = 0;
 
-    uint16_t top_part_up_most = 600;
-    uint16_t top_part_center = 1450;
-    uint16_t top_comp_pos = top_part_center;
+public:
+    void move_center();
+
+    void move_up_most();
+
+    void move_down_most();
+
+    void move_up_by(uint16_t moveBy);
+
+    void move_down_by(uint16_t moveBy);
 };
 
