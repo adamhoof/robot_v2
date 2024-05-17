@@ -1,1 +1,1 @@
-#include "face/mouth/koutky/right/right_koutek.h"
+#include "face/mouth/koutky/right/right_koutek_top.h"

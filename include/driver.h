@@ -15,4 +15,4 @@ void setupDrivers();
 
 long msToPulse(uint16_t ms);
 
-void moveByMs(uint8_t part, uint16_t ms, uint8_t driverNum);
+void move_to(uint8_t part, uint16_t ms, uint8_t driverNum);
