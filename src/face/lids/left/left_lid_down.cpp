@@ -1,2 +1,2 @@
-#include "face/lids/left/left_lid_down.h"
+#include "face/lids/left/left_lid_bottom.h"
 
