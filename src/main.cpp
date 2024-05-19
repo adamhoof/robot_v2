@@ -42,14 +42,23 @@ Chin chin;
 
 void centerAll() {
     leftKoutekTop.move_center();
+    delay(2);
     leftKoutekBottom.move_center();
+    delay(2);
     rightKoutekTop.move_center();
+    delay(2);
     rightKoutekBottom.move_center();
+    delay(2);
     leftEyeUpDown.move_center();
+    delay(2);
     leftEyeLeftRight.move_center();
+    delay(2);
     rightEyeUpDown.move_center();
+    delay(2);
     rightEyeLeftRight.move_center();
+    delay(2);
     leftLidTop.move_center();
+    delay(2);
     rightLidTop.move_center();
 }
 
@@ -66,62 +75,89 @@ void fuckFace() {
 
 void smile() {
     leftKoutekTop.move_up_most();
+    delay(2);
     leftKoutekBottom.move_down_most();
+    delay(2);
     rightKoutekTop.move_up_most();
+    delay(2);
     rightKoutekBottom.move_down_most();
+    delay(2);
     leftEyeUpDown.move_center();
+    delay(2);
     leftEyeLeftRight.move_center();
+    delay(2);
     rightEyeUpDown.move_center();
+    delay(2);
     rightEyeLeftRight.move_center();
 }
 
 void angry() {
     leftKoutekTop.move_down_most();
+    delay(2);
     leftKoutekBottom.move_down_most();
+    delay(2);
     rightKoutekTop.move_down_most();
+    delay(2);
     rightKoutekBottom.move_down_most();
+    delay(2);
     leftEyeUpDown.move_down_most();
+    delay(2);
     leftEyeLeftRight.move_left_most();
+    delay(2);
     rightEyeUpDown.move_down_most();
+    delay(2);
     rightEyeLeftRight.move_right_most();
 }
 
 void look_left() {
     leftEyeLeftRight.move_left_most();
+    delay(2);
     rightEyeLeftRight.move_left_most();
 }
 
 void look_right() {
     leftEyeLeftRight.move_right_most();
+    delay(2);
     rightEyeLeftRight.move_right_most();
 }
 
 void look_up() {
     leftEyeUpDown.move_up_most();
+    delay(2);
     rightEyeUpDown.move_up_most();
 }
 
 void look_down() {
     leftEyeUpDown.move_down_most();
+    delay(2);
     rightEyeUpDown.move_down_most();
 }
 
 void surprise() {
     leftKoutekTop.move_down_most();
+    delay(2);
     leftKoutekBottom.move_down_most();
+    delay(2);
     rightKoutekTop.move_down_most();
+    delay(2);
     rightKoutekBottom.move_down_most();
+    delay(2);
     leftEyeUpDown.move_up_most();
+    delay(2);
     rightEyeUpDown.move_up_most();
+    delay(2);
     leftLidTop.move_up_most();
+    delay(2);
     rightLidTop.move_up_most();
 }
 
 void blink() {
     leftLidTop.move_down_most();
+    delay(2);
     rightLidTop.move_down_most();
-    delay(100);
+    delay(2);
     leftLidTop.move_up_most();
+    delay(2);
     rightLidTop.move_up_most();
 }
 
